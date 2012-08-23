@@ -5,7 +5,7 @@
         <meta charset="utf-8">
         <title>Niklas von Hertzen</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="description" content="">
+        <meta name="description" content="Front-end web developer and a student">
         <meta name="author" content="Niklas von Hertzen">
 
         <!-- Le styles -->
@@ -24,6 +24,11 @@
         <meta property="og:site_name" content="Niklas von Hertzen" />
         <meta property="fb:admins" content="516961119" />
 
+		
+		<link rel="shortcut icon" href="/img/16.png" />
+		<link rel="apple-touch-icon" href="/img/128.png"/>
+
+		
         <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
         <!--[if lt IE 9]>
           <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -31,16 +36,16 @@
 
     </head>
 
-    <body>
+    <body data-spy="scroll">
 
-        <div class="navbar navbar-fixed-top">
+        <div class="navbar navbar-fixed-top" id="top">
             <div class="navbar-inner">
                 <div class="container">
 
                     <a class="brand" href="/">Niklas von Hertzen</a>
                     <div class="nav-collapse">
                         <ul class="nav">
-                            <li class="active"><a href="#">Home</a></li>
+                            <li class="active"><a href="#top">Home</a></li>
                             <li><a href="#projects">Projects</a></li>
                             <li><a href="#about">About me</a></li>
                             <li><a href="#contact">Contact</a></li>
@@ -224,10 +229,17 @@
                 <p>
                     My hobbies include video editing, 3D animation, biking and <a href="http://en.wikipedia.org/wiki/Floorball">floorball</a>. I'm also a TV show addict and like vanilla ice cream. 
                 </p>
-                <h2 id="contact">Contact</h2>
-                <p>You can contact me through <a href="https://twitter.com/niklasvh">Twitter</a>, <a href="http://www.linkedin.com/pub/niklas-von-hertzen/16/522/5ab">LinkedIn</a>, <a href="https://plus.google.com/115030581977322198102/posts">Google+</a>, <a href="https://github.com/niklasvh">GitHub</a> or e-mail at <img src="images/email.jpg" title="e-mail" alt="autobots, rollout!" />. For support related questions regarding my libraries, please open up a ticket for the related library at GitHub. 
-                <hr />
+
             </section>
+
+            <section id="contact">
+
+                <h2>Contact</h2>
+                <p>You can contact me through <a href="https://twitter.com/niklasvh">Twitter</a>, <a href="http://www.linkedin.com/pub/niklas-von-hertzen/16/522/5ab">LinkedIn</a>, <a href="https://plus.google.com/115030581977322198102/posts">Google+</a>, <a href="https://github.com/niklasvh">GitHub</a> or e-mail at <img src="images/email.jpg" title="e-mail" alt="autobots, rollout!" />. For support related questions regarding my libraries, please open up a ticket for the related library at GitHub. 
+
+            </section>
+
+            <hr />
             <footer>
                 <p>&copy; Niklas von Hertzen 2012</p>
             </footer>
@@ -247,8 +259,9 @@
                 var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
             })();
         </script>
-
-
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="/js/heatmap.min.js"></script>
 
         <!-- Le javascript
         ================================================== -->
