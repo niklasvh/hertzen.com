@@ -255,5 +255,16 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script src="/js/heatmap.min.js"></script>
+		<script>
+			function is3D() {
+				if (document.location.hash.indexOf("3d") !== -1) {
+					var s = document.createElement("script");
+					s.src = "http://hertzen.com/js/domfps.min.js";
+					document.body.appendChild(s);
+				}
+			}
+			$(window).on("hashchange", is3D);
+			is3D();
+		</script>
     </body>
 </html>
