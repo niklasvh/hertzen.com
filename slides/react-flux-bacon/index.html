@@ -62,13 +62,31 @@
             </ol>
         </section>
 
-        <!-- Example of nested vertical slides -->
         <section data-background="#007777">
             <section>
                 <h2>React</h2>
                 <p class="fragment">
-                    A JavaScript <strong>library</strong> for building user interfaces.
+                    A JavaScript <strong style="text-decoration: underline">library</strong> for building user interfaces.
                 </p>
+            </section>
+            <section>
+                <h3>Who uses it?</h3>
+                <ul class="fragment">
+                    <li class="fragment">Facebook</li>
+                    <li class="fragment">Instagram</li>
+                    <li class="fragment">Yahoo!</li>
+                    <li class="fragment">Github (atom.io)</li>
+                    <li class="fragment">Adobe (brackets)</li>
+                    <li class="fragment">Reddit</li>
+                    <li class="fragment">Airbnb</li>
+                    <li class="fragment">etc...</li>
+                </ul>
+            </section>
+        </section>
+
+        <section data-background="#007777">
+            <section>
+                <h2>React tl;dr</h2>
             </section>
             <section>
                 <h3>
@@ -79,9 +97,7 @@
                 </ul>
             </section>
             <section>
-                <h3>
-                    Create components, not templates
-                </h3>
+                <h3>Create components, not templates</h3>
                 <ul>
                     <li class="fragment">Highly cohesive modules loosely coupled with other components</li>
                     <li class="fragment">Encapsulation makes them easily reusable, composable and unit testable</li>
@@ -165,7 +181,7 @@
                     <li class="fragment">Number of performance assistance improvements can be provided if necessary.
                         <ul>
                             <li class="fragment">Define if components are pure with <a href="http://facebook.github.io/react/docs/pure-render-mixin.html">PureRenderMixin</a></li>
-                            <li class="fragment">Provide assistance on when a re-render is <u>not</u> necessary with <a href="http://facebook.github.io/react/docs/component-specs.html#updating-shouldcomponentupdate"><code>shouldComponentMethod</code></a></li>
+                            <li class="fragment">Provide assistance on when a re-render is <u>not</u> necessary with <a href="http://facebook.github.io/react/docs/component-specs.html#updating-shouldcomponentupdate"><code>shouldComponentUpdate</code></a> method</li>
                         </ul>
                     </li>
                 </ul>
@@ -183,8 +199,51 @@
         </section>
 
         <section data-background="#007777">
-            <h2>Animation</h2>
+            <section>
+                <h2>Animation</h2>
+                <p class="fragment">React provides two addon components for <a href="http://facebook.github.io/react/docs/animation.html">animation</a></p>
+                <ul>
+                    <li class="fragment"><a href="https://github.com/facebook/react/blob/master/src/addons/transitions/ReactTransitionGroup.js"><code>ReactTransitionGroup</code></a> - low level API for animation</li>
+                    <li class="fragment"><a href="https://github.com/facebook/react/blob/master/src/addons/transitions/ReactCSSTransitionGroup.js"><code>ReactCSSTransitionGroup</code></a> - high level API for easy CSS animations and transitions</li>
+                </ul>
+            </section>
+            <section>
+                <h2>Example</h2>
+                <style>
+                    .strikethrough {
+                        text-decoration: line-through;
+                        cursor: pointer;
+                    }
+                    .demo-enter {
+                        opacity: 0.01;
+                        transition: all .5s ease-in;
+                        transform: scale(0);
+                    }
 
+                    .demo-enter.demo-enter-active {
+                        opacity: 1;
+                        transform: scale(1);
+                    }
+
+                    .demo-leave {
+                        opacity: 1;
+                        transform: scale(1);
+                        transition: all .5s ease-in;
+                    }
+
+                    .demo-leave.demo-leave-active {
+                        opacity: 0.01;
+                        transform: scale(0);
+                    }
+                </style>
+                <div id="example2" style="background: #fff; color: #000" class="fragment"></div>
+            </section>
+            <section>
+                <img src="examples/code3.jpg" />
+            </section>
+            <section>
+                <img src="examples/code3-1.jpg" />
+            </section>
         </section>
 
         <section data-background="#007777">
@@ -196,8 +255,86 @@
         </section>
 
         <section data-background="#4B9150">
-            <h2>Flux</h2>
-            <p>Application architecture for building user interfaces</p>
+            <section data-background="#4B9150">
+                <h2>Flux</h2>
+                <p>Application architecture for building user interfaces</p>
+            </section>
+            <section>
+                <h3>Unidirectional data flow</h3>
+                <img class="fragment" src="examples/flux.jpg" />
+            </section>
+            <section>
+                <h3>Unidirectional data flow</h3>
+                <img src="examples/flux-diagram-white-background.png" />
+            </section>
+            <section>
+                <h3>General ideas</h3>
+                <ul>
+                    <li class="fragment">You can get the full state at any given time</li>
+                    <li class="fragment">It doesn't give updates of what changed, but informs you that something changed</li>
+                </ul>
+            </section>
+        </section>
+
+        <section data-background="#4B9150">
+            <h2>Dispatcher</h2>
+            <ul>
+                <li class="fragment">Central hub that manages all data flow in Flux applications</li>
+                <li class="fragment">pub/sub system - action creators publish, stores subscribe</li>
+                <li class="fragment">Can be implemented with for example Node.js <a href="http://nodejs.org/api/events.html">EventEmitter</a> <ul>
+                    <li class="fragment">...or use a ready implementation, such as <code>require('flux').Dispatcher</code></li>
+                </ul></li>
+            </ul>
+        </section>
+
+        <section data-background="#4B9150">
+            <h2>Stores</h2>
+            <ul>
+                <li class="fragment">Contains the data and application logic for a specific domain</li>
+                <li class="fragment">Subscribers to actions that are relevant to it</li>
+                <li class="fragment">Emits a change event when something changes</li>
+                <li class="fragment">Have no public setters, just getters</li>
+                <li class="fragment">Have no idea how the data should be viewed</li>
+            </ul>
+        </section>
+
+        <section data-background="#4B9150">
+            <h2>Views</h2>
+            <ul>
+                <li class="fragment">Register to be notified when specific stores update</li>
+                <li class="fragment">Always fetches whole state from stores</li>
+                <li class="fragment">Have no idea how the data should be updated/managed</li>
+                <li class="fragment">Have component logic, but no application logic</li>
+            </ul>
+        </section>
+
+        <section data-background="#4B9150">
+            <h2>The benefits</h2>
+            <ul>
+                <li class="fragment">Clear separation of concern, low coupling - high cohesion</li>
+                <li class="fragment">Application logic independent from views</li>
+                <li class="fragment">Easier to test both stores and views</li>
+            </ul>
+        </section>
+
+        <section data-background="#4B9150">
+            <h2>The benefits</h2>
+            <ul>
+                <li class="fragment">Clear separation of concern, low coupling - high cohesion</li>
+                <li class="fragment">Application logic independent from views</li>
+                <li class="fragment">Easier to test both stores and views</li>
+            </ul>
+        </section>
+
+        <section data-background="#4B9150">
+            <h2>Implementations</h2>
+            <ul>
+                <li class="fragment">fluxxor</li>
+                <li class="fragment">Reflux</li>
+                <li class="fragment">McFly</li>
+                <li class="fragment">DeLorean</li>
+                <li class="fragment"><a href="https://www.npmjs.org/browse/keyword/flux">etc...</a></li>
+            </ul>
         </section>
 
         <section data-background="#6E3333">
@@ -214,16 +351,21 @@
 
 <script src="lib/js/head.min.js"></script>
 <script src="js/reveal.min.js"></script>
+<script src="js/immutable.min.js"></script>
 <!-- The core React library -->
 <script src="http://fb.me/react-with-addons-0.12.1.js"></script>
 <!-- In-browser JSX transformer, remove when pre-compiling JSX. -->
 <script src="http://fb.me/JSXTransformer-0.12.1.js"></script>
 
 <script type="text/jsx;stripTypes=true;harmony=true" src="examples/example1.js"></script>
+<script type="text/jsx;stripTypes=true;harmony=true" src="examples/example2.js"></script>
 
 <script>
     // Full list of configuration options available here:
     // https://github.com/hakimel/reveal.js#configuration
+    window.Perf = React.addons.Perf;
+    window.Perf.start();
+
     Reveal.initialize({
         width: 1400,
         controls: true,
