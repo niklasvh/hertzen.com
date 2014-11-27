@@ -6,7 +6,7 @@
 
     <title>Reactive rendering with React, Bacon & Flux</title>
 
-    <meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+    <meta name="description" content="Reactive rendering with React, Bacon & Flux">
     <meta name="author" content="Niklas von Hertzen">
 
     <meta name="apple-mobile-web-app-capable" content="yes"/>
@@ -59,6 +59,7 @@
                 <li class="fragment">React</li>
                 <li class="fragment">Flux</li>
                 <li class="fragment">React & Flux w/ Bacon</li>
+                <li class="fragment">Demos</li>
             </ol>
         </section>
 
@@ -74,11 +75,11 @@
                 <ul class="fragment">
                     <li class="fragment">Facebook</li>
                     <li class="fragment">Instagram</li>
-                    <li class="fragment">Yahoo!</li>
-                    <li class="fragment">Github (atom.io)</li>
-                    <li class="fragment">Adobe (brackets)</li>
+                    <li class="fragment"><a href="http://yahooeng.tumblr.com/post/101682875656/evolving-yahoo-mail">Yahoo!</a></li>
+                    <li class="fragment"><a href="https://medium.com/code-stories/dev-chats-spike-brehm-of-airbnb-87e155f3475d">Airbnb</a></li>
+                    <li class="fragment"><a href="http://blog.atom.io/2014/07/02/moving-atom-to-react.html">Github (atom.io)</a></li>
+                    <li class="fragment"><a href="http://www.kevindangoor.com/2014/05/react-in-brackets/">Adobe (brackets)</a></li>
                     <li class="fragment">Reddit</li>
-                    <li class="fragment">Airbnb</li>
                     <li class="fragment">etc...</li>
                 </ul>
             </section>
@@ -86,7 +87,7 @@
 
         <section data-background="#007777">
             <section>
-                <h2>React tl;dr</h2>
+                <h2>React basics</h2>
             </section>
             <section>
                 <h3>
@@ -272,6 +273,7 @@
                 <ul>
                     <li class="fragment">You can get the full state at any given time</li>
                     <li class="fragment">It doesn't give updates of what changed, but informs you that something changed</li>
+                    <li class="fragment">Decouples store dependencies through event handlers</li>
                 </ul>
             </section>
         </section>
@@ -291,10 +293,10 @@
             <h2>Stores</h2>
             <ul>
                 <li class="fragment">Contains the data and application logic for a specific domain</li>
-                <li class="fragment">Subscribers to actions that are relevant to it</li>
+                <li class="fragment">Subscribes to actions that are relevant to it</li>
                 <li class="fragment">Emits a change event when something changes</li>
                 <li class="fragment">Have no public setters, just getters</li>
-                <li class="fragment">Have no idea how the data should be viewed</li>
+                <li class="fragment">Have no idea how the data should be displayed</li>
             </ul>
         </section>
 
@@ -321,6 +323,7 @@
             <h2>Implementations</h2>
             <ul>
                 <li class="fragment">fluxxor</li>
+                <li class="fragment">Dispatchr</li>
                 <li class="fragment">Reflux</li>
                 <li class="fragment">McFly</li>
                 <li class="fragment">DeLorean</li>
@@ -330,6 +333,57 @@
 
         <section data-background="#6E3333">
             <h2>React + Flux with Bacon.js</h2>
+        </section>
+
+        <section data-background="#6E3333">
+            <h2>Basics (short version)</h2>
+            <ul>
+                <li class="fragment">Replace dispatcher with Bacon stream(s)</li>
+                <li class="fragment">Subscribe views to store streams (use mixins)</li>
+                <li class="fragment">...profit?</li>
+            </ul>
+        </section>
+
+        <section data-background="#6E3333">
+            <section data-background="#6E3333">
+                <h2>Basics (long version)</h2>
+                <p class="fragment">Where should streams originate from?</p>
+            </section>
+            <section data-background="#6E3333">
+                <h2>As static properties of components?</h2>
+                <img src="examples/code4.jpg" />
+            </section>
+            <section data-background="#6E3333">
+                <h2>Within seperate action creators?</h2>
+                <img src="examples/code4-1.jpg" />
+            </section>
+        </section>
+
+        <section data-background="#6E3333">
+            <section data-background="#6E3333">
+                <h2>Stores subscribe and update data...</h2>
+                <img src="examples/code5-1.jpg" />
+            </section>
+            <section data-background="#6E3333">
+                <h2>...and expose filtered / mapped views of it</h2>
+                <img src="examples/code5-2.jpg" />
+            </section>
+            <section data-background="#6E3333">
+                <h2>Views subscribe to store streams</h2>
+                <img src="examples/code5-3.jpg" style="height:650px;" />
+            </section>
+        </section>
+
+        <section data-background="#6E3333">
+            <section data-background="#6E3333">
+                <h2>Demos (React+Flux+Bacon)</h2>
+                <ul>
+                    <li><a href="http://history-store.do1.hertzen.com/">History API as store</a> (<a href="https://github.com/niklasvh/react-bacon-flux-poc/tree/master/examples/history-store">source</a>)</li>
+                    <li><a href="http://todomvc.do1.hertzen.com/">TodoMVC</a> (<a href="https://github.com/niklasvh/react-bacon-flux-poc/tree/master/examples/flux-todomvc">source</a>)</li>
+                    <li><a href="http://chat.do1.hertzen.com/">Chat</a> (<a href="https://github.com/niklasvh/react-bacon-flux-poc/tree/master/examples/flux-chat">source</a>)</li>
+                    <li><a href="http://blog.hertzen.com/post/102991359167/flux-inspired-reactive-data-flow-using-react-and">blog post</a></li>
+                </ul>
+            </section>
         </section>
 
         <section>

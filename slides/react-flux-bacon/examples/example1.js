@@ -8,7 +8,7 @@ var TodoItem = React.createClass({
 
 var TodoList = React.createClass({
     render: function() {
-        var list = this.props.items.map(item => <TodoItem complete={item.complete}>{item.text}</TodoItem>);
+        var list = this.props.items.map((item, index) => <TodoItem key={index} complete={item.complete}>{item.text}</TodoItem>);
         return <div><strong>Item count: {list.length}</strong> {list}</div>;
     }
 });
