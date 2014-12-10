@@ -1,0 +1,356 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+
+    <title>Reactive rendering with React, Bacon & Flux</title>
+
+    <meta name="description" content="Reactive rendering with React, Bacon & Flux">
+    <meta name="author" content="Niklas von Hertzen">
+
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <link rel="stylesheet" href="css/reveal.min.css">
+    <link rel="stylesheet" href="css/theme/default.css" id="theme">
+
+    <!-- For syntax highlighting -->
+    <link rel="stylesheet" href="lib/css/zenburn.css">
+
+    <!-- If the query includes 'print-pdf', include the PDF print sheet -->
+    <script>
+        if (window.location.search.match(/print-pdf/gi)) {
+            var link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.type = 'text/css';
+            link.href = 'css/print/pdf.css';
+            document.getElementsByTagName('head')[0].appendChild(link);
+        }
+    </script>
+
+    <!--[if lt IE 9]>
+    <script src="lib/js/html5shiv.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+
+<div class="reveal">
+
+    <!-- Any section element inside of this container is displayed as a slide -->
+    <div class="slides">
+        <section>
+            <h1>Reactive rendering</h1>
+
+            <h3>Introduction to React</h3>
+
+            <p>
+                <small>By <a href="https://hertzen.com">Niklas von Hertzen</a> / <a href="https://twitter.com/niklasvh">@niklasvh</a></small>
+            </p>
+        </section>
+
+        <section>
+            <h2>Agenda</h2>
+
+            <ol>
+                <li class="fragment">React</li>
+                <li class="fragment">Demos</li>
+                <li class="fragment">Hands-on</li>
+            </ol>
+        </section>
+
+        <section data-background="#007777">
+            <section>
+                <h2>React</h2>
+                <p class="fragment">
+                    A JavaScript <strong style="text-decoration: underline">library</strong> for building user interfaces.
+                </p>
+            </section>
+            <section>
+                <h3>Who uses it?</h3>
+                <ul class="fragment">
+                    <li class="fragment">Facebook</li>
+                    <li class="fragment">Instagram</li>
+                    <li class="fragment"><a href="http://yahooeng.tumblr.com/post/101682875656/evolving-yahoo-mail">Yahoo!</a></li>
+                    <li class="fragment"><a href="https://medium.com/code-stories/dev-chats-spike-brehm-of-airbnb-87e155f3475d">Airbnb</a></li>
+                    <li class="fragment"><a href="http://blog.atom.io/2014/07/02/moving-atom-to-react.html">Github (atom.io)</a></li>
+                    <li class="fragment"><a href="http://www.kevindangoor.com/2014/05/react-in-brackets/">Adobe (brackets)</a></li>
+                    <li class="fragment"><a href="http://engineering.pinterest.com/post/104418761649/building-pinalytics-pinterests-data-analytics">pinterest</a></li>
+                    <li class="fragment">Netflix</li>
+                    <li class="fragment">Reddit</li>
+                    <li class="fragment">etc...</li>
+                </ul>
+            </section>
+        </section>
+
+        <section data-background="#007777">
+            <section>
+                <h2>React basics</h2>
+            </section>
+            <section>
+                <h3>
+                    Re-render the whole application on each state change
+                </h3>
+                <ul>
+                    <li class="fragment">Simple, predictable and declarative - easy to express how the application should look at any given point in time</li>
+                </ul>
+            </section>
+            <section>
+                <h3>Create components, not templates</h3>
+                <ul>
+                    <li class="fragment">Highly cohesive modules loosely coupled with other components</li>
+                    <li class="fragment">Encapsulation makes them easily reusable, composable and unit testable</li>
+                    <li class="fragment"><strong>Web components</strong> aim to fix the same problems as React components, but approach it a lot differently</li>
+                </ul>
+            </section>
+        </section>
+
+        <section data-background="#007777">
+            <section>
+                <h2>Example</h2>
+                <img src="examples/code1.jpg" />
+            </section>
+            <section>
+                <img src="examples/code1-1.jpg" />
+                <style>
+                    .complete {
+                        color: green;
+                    }
+                    .incomplete {
+                        color: red;
+                    }
+                </style>
+                <div id="example1" style="background: #fff; color: #000" class="fragment"></div>
+            </section>
+        </section>
+
+        <section data-background="#007777">
+            <section>
+                <h2>JSX</h2>
+                <ul>
+                    <li class="fragment">A JavaScript syntax extension that let's you use HTML-like syntax</li>
+                    <li class="fragment">Completely optional</li>
+                    <li class="fragment">Provides optional ES6 syntax support (arrows functions, destructuring assignment, rest parameter etc.)</li>
+                    <li class="fragment">Can be used to compile statically-typed <a href="http://flowtype.org/">Flow</a> code to valid JavaScript</li>
+                </ul>
+            </section>
+            <section>
+                <h2>JSX vs. vanilla JavaScript</h2>
+                <img src="examples/code2.jpg" class="fragment" />
+                <img src="examples/code2-1.jpg" class="fragment" />
+            </section>
+        </section>
+
+        <section data-background="#007777">
+            <section>
+                <h2>Virtual DOM</h2>
+                <p class="fragment">An object tree representation of the DOM</p>
+            </section>
+            <section>
+                <h2>Why?</h2>
+                <ul>
+                    <li class="fragment">Deleting and creating the DOM on every update is too expensive</li>
+                    <li class="fragment">You would lose scroll position, form state, make CSS animations impossible, etc.</li>
+                </ul>
+            </section>
+            <section>
+                <h2>Solution</h2>
+                <p class="fragment">On every update, React:</p>
+                <ol>
+                    <li class="fragment">builds a new Virtual DOM tree</li>
+                    <li class="fragment">diffs the new tree with the previous</li>
+                    <li class="fragment">computes minimal set of mutations needed to get the real DOM up-to-date</li>
+                    <li class="fragment">batch executes all the updates to the DOM</li>
+                </ol>
+            </section>
+            <section>
+                <h2>Event system</h2>
+                <p class="fragment">React uses a virtual event system as well</p>
+                <ol>
+                    <li class="fragment">Wraps all DOM events in <code>SyntheticEvent</code> objects, with the same interface as the native browser event.</li>
+                    <li class="fragment">Normalizes events to be consistent across all browsers</li>
+                    <li class="fragment">Minimizes the number of real event listeners in the DOM by performing event delegation to components itself</li>
+                </ol>
+            </section>
+            <section>
+                <h2>Notes</h2>
+                <ul>
+                    <li class="fragment">With the default batching strategy in React, updating state occurs at the end of an event loop</li>
+                    <li class="fragment">Your own custom batching strategy can be used, React provides one based on <a href="https://github.com/facebook/react/blob/master/src/addons/ReactRAFBatchingStrategy.js">requestAnimationFrame</a> as well.</li>
+                    <li class="fragment">Number of performance assistance improvements can be provided if necessary.
+                        <ul>
+                            <li class="fragment">Define if components are pure with <a href="http://facebook.github.io/react/docs/pure-render-mixin.html">PureRenderMixin</a></li>
+                            <li class="fragment">Provide assistance on when a re-render is <u>not</u> necessary with <a href="http://facebook.github.io/react/docs/component-specs.html#updating-shouldcomponentupdate"><code>shouldComponentUpdate</code></a> method</li>
+                        </ul>
+                    </li>
+                </ul>
+            </section>
+        </section>
+
+        <section data-background="#007777">
+            <h2>Testing</h2>
+            <ul>
+                <li class="fragment"><a href="http://facebook.github.io/react/docs/test-utils.html"><code>React.addons.TestUtils</code></a> provides helpful tools for testing components</li>
+                <li class="fragment">Can easily be integrated with the test framework of your choice</li>
+                <li class="fragment">Easily simulate events with your components</li>
+            </ul>
+            <pre class="fragment"><code data-trim contenteditable style="font-size: 18px;">React.addons.TestUtils.Simulate.change(node, {target: {value: 'Hello, world'}});</code></pre>
+        </section>
+
+        <section data-background="#007777">
+            <section>
+                <h2>Animation</h2>
+                <p class="fragment">React provides two addon components for <a href="http://facebook.github.io/react/docs/animation.html">animation</a></p>
+                <ul>
+                    <li class="fragment"><a href="https://github.com/facebook/react/blob/master/src/addons/transitions/ReactTransitionGroup.js"><code>ReactTransitionGroup</code></a> - low level API for animation</li>
+                    <li class="fragment"><a href="https://github.com/facebook/react/blob/master/src/addons/transitions/ReactCSSTransitionGroup.js"><code>ReactCSSTransitionGroup</code></a> - high level API for easy CSS animations and transitions</li>
+                </ul>
+            </section>
+            <section>
+                <h2>Example</h2>
+                <style>
+                    .strikethrough {
+                        text-decoration: line-through;
+                        cursor: pointer;
+                    }
+                    .demo-enter {
+                        opacity: 0.01;
+                        transition: all .5s ease-in;
+                        transform: scale(0);
+                    }
+
+                    .demo-enter.demo-enter-active {
+                        opacity: 1;
+                        transform: scale(1);
+                    }
+
+                    .demo-leave {
+                        opacity: 1;
+                        transform: scale(1);
+                        transition: all .5s ease-in;
+                    }
+
+                    .demo-leave.demo-leave-active {
+                        opacity: 0.01;
+                        transform: scale(0);
+                    }
+                </style>
+                <div id="example2" style="background: #fff; color: #000" class="fragment"></div>
+            </section>
+            <section>
+                <img src="examples/code3.jpg" />
+            </section>
+            <section>
+                <img src="examples/code3-1.jpg" />
+            </section>
+        </section>
+
+        <section data-background="#007777">
+            <h2>Useful React tools</h2>
+            <ul>
+                <li class="fragment"><a href="https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en">Chrome React Developer Tools extension</a></li>
+                <li class="fragment"><a href="http://facebook.github.io/react/docs/perf.html">React Perf API</a></li>
+            </ul>
+        </section>
+
+        <section data-background="#007777">
+            <h2>Things to think about</h2>
+            <ul>
+                <li class="fragment">Define CSS within components instead of external stylesheets (see <a href="https://github.com/js-next/react-style">react-style</a>)</li>
+                <li class="fragment">Debugging applications - serializing application state could be done with ease and transferred to another client</li>
+                <li class="fragment">Use React for other outputs than the DOM, for example <a href="https://github.com/reactjs/react-art">React ART</a></li>
+            </ul>
+        </section>
+
+        <section data-background="#6E3333">
+            <section data-background="#6E3333">
+                <h2>Demos (React+Flux+Bacon)</h2>
+                <ul>
+                    <li><a href="http://history-store.do1.hertzen.com/">History API as store</a> (<a href="https://github.com/niklasvh/react-bacon-flux-poc/tree/master/examples/history-store">source</a>)</li>
+                    <li><a href="http://todomvc.do1.hertzen.com/">TodoMVC</a> (<a href="https://github.com/niklasvh/react-bacon-flux-poc/tree/master/examples/flux-todomvc">source</a>)</li>
+                    <li><a href="http://chat.do1.hertzen.com/">Chat</a> (<a href="https://github.com/niklasvh/react-bacon-flux-poc/tree/master/examples/flux-chat">source</a>)</li>
+                    <li><a href="http://blog.hertzen.com/post/102991359167/flux-inspired-reactive-data-flow-using-react-and">blog post</a></li>
+                </ul>
+            </section>
+        </section>
+
+        <section>
+            <h1>&lt;End&gt;</h1>
+        </section>
+
+    </div>
+
+</div>
+
+<script src="lib/js/head.min.js"></script>
+<script src="js/reveal.min.js"></script>
+<script src="js/immutable.min.js"></script>
+<!-- The core React library -->
+<script src="http://fb.me/react-with-addons-0.12.1.js"></script>
+<!-- In-browser JSX transformer, remove when pre-compiling JSX. -->
+<script src="http://fb.me/JSXTransformer-0.12.1.js"></script>
+
+<script type="text/jsx;stripTypes=true;harmony=true" src="examples/example1.js"></script>
+<script type="text/jsx;stripTypes=true;harmony=true" src="examples/example2.js"></script>
+
+<script>
+    // Full list of configuration options available here:
+    // https://github.com/hakimel/reveal.js#configuration
+    window.Perf = React.addons.Perf;
+    window.Perf.start();
+
+    Reveal.initialize({
+        width: 1400,
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+
+        theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+        transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+        // Parallax scrolling
+        // parallaxBackgroundImage: 'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg',
+        // parallaxBackgroundSize: '2100px 900px',
+
+        // Optional libraries used to extend on reveal.js
+        dependencies: [
+            {
+                src: 'lib/js/classList.js', condition: function () {
+                return !document.body.classList;
+            }
+            },
+            {
+                src: 'plugin/markdown/marked.js', condition: function () {
+                return !!document.querySelector('[data-markdown]');
+            }
+            },
+            {
+                src: 'plugin/markdown/markdown.js', condition: function () {
+                return !!document.querySelector('[data-markdown]');
+            }
+            },
+            {
+                src: 'plugin/highlight/highlight.js', async: true, callback: function () {
+                hljs.initHighlightingOnLoad();
+            }
+            },
+            {
+                src: 'plugin/zoom-js/zoom.js', async: true, condition: function () {
+                return !!document.body.classList;
+            }
+            },
+            {
+                src: 'plugin/notes/notes.js', async: true, condition: function () {
+                return !!document.body.classList;
+            }
+            }
+        ]
+    });
+
+</script>
+</body>
+</html>
