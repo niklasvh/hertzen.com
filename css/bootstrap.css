@@ -4947,15 +4947,16 @@ to {
     -moz-border-radius: 6px;
     border-radius: 6px;
     color: #fff;
+    min-height: 150px;
     background: url(../images/hero.jpg);
 
 }
 
 .hero-unit aside {
     float:right;
-    margin:-130px 26px 0 0;
+    margin:-100px 26px 0 0;
 
-  
+
     position:relative;
 }
 
